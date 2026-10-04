@@ -15,27 +15,34 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.TipoModel;
 
 @WebServlet("/cargaComboTipoAlias")
-public class CargaComboTipoServlet extends HttpServlet{
+
+public class CargaComboTipoServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
 		//1 Traer los tipos de la base de datos y enviarlos al cliente en JSON
+
 		TipoModel model = new TipoModel();
-		List<Tipo> lista = model.listaTipo();	
-		
-		//2 Construir el JSON mmediante Gson modo pretty print
+
+		List<Tipo> lista = model.listaTipo();
+
+		//2 Construir el JSON mediante Gson modo pretty print
+
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
 		String jsonSalida = gson.toJson(lista);
+
 		System.out.println("Respuesta JSON: " + jsonSalida);
-		
+
 		//3 Enviar la respuesta al cliente
+
 		resp.setContentType("application/json");
+
 		resp.setCharacterEncoding("UTF-8");
+
 		resp.getWriter().write(jsonSalida);
-		
 	}
-	
 }
